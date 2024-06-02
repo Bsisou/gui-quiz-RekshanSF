@@ -1,41 +1,53 @@
-# Import module  
 import os
-import tkinter as tk
+os.system('pip install Pillow')
 
+# Import module  
+from tkinter import * 
+from PIL import Image, ImageTk
+
+#list of names
+names = []
+
+#_______ Creating main class
+class Main:
+    def __init__(self, parent):
+        bgcolor = "blue"
+        # Frame Setup
+        self.quiz_frame = Frame(parent, bg=bgcolor, padx=100, pady=100)
+        self.quiz_frame.grid()
+
+        
+        # Label widget for heading
+        self.heading_label = Label(self.quiz_frame, text="Welcome to \n Rekki's Global Mind Melt!",font=("impact", 30, "bold"), bg=bgcolor)
+        self.heading_label.grid(row=0)
+        #label for enter your name text 
+        self.user_label = Label(self.quiz_frame, text="Enter Your Name Below", font=("impact", 20, "bold"), bg=bgcolor, pady=50, padx=20 )
+        self.user_label.grid(row=1)
+
+        #entry box for name
+        self.entry_box = Entry(self.quiz_frame)
+        self.entry_box.grid(row=2)
+
+        #Next button 
+        self.nextbutton = Button(self.quiz_frame, text="Next", bg="green", command=self.namecollect)
+        self.nextbutton.grid(row=3, pady=30)
+
+        #name collection
+    def namecollect(self):
+        name = self.entry_box.get()
+        names.append(name)
+        self.quiz_frame.destroy()
+        
+
+        
+#start of Program       
 # Create object  
-root = tk.Tk() 
+if __name__ == "__main__":
+        root = Tk()
+        root.title("Rekki's Global Mind Melt")
+       
 
-#Creating Question page 1 
-def questionpage():
-
-          root.destroy()         
-          Q1 = tk.Tk() 
-          Q1.title("Question 1")
-          Q1.geometry("1400x700")
-          Q1.mainloop()
-
-
-#chnage window title name 
-root.title("Rekki's Global Mind Melt")
-
-# Adjust size  
-root.geometry("1400x700") 
-
-#add image file 
-bg = tk.PhotoImage(file="start1.png")
-
-#Create Canvas
-canvas1= tk.Canvas(root, width=1400, height=700)
-canvas1.pack(fill="both", expand=True)
-
-#display image 
-canvas1.create_image(0, 0, image=bg, anchor="nw")
-
-#adding button to canvas 
-b1 = tk.Button(root, text='Start', width=40,
-          height=5, bd='10', command=questionpage)
-
-b1.place(x=450, y=450)
+main_object = Main(root)
 
 # Execute tkinter 
 root.mainloop()
