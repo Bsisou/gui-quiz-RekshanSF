@@ -4,9 +4,49 @@ os.system('pip install Pillow')
 # Import module  
 from tkinter import * 
 from PIL import Image, ImageTk
+import ramdom
 
 #list of names
 names = []
+
+global q_a
+
+asked = []
+
+#dictionary of all my questions and answers
+q_a = {
+    
+    #index 0 is the question, index 1-4 are the answers, index 5 is the correct answer written again, index 6 is the correct answer index
+    
+    1: ["What Flag is this ?", 'Nepal', 'Sri lanka', 'China', 'South Korea', 'Sri Lanka', 2],
+    
+    2: ["Kangaroos Are The National Animal Of What Country?", 'USA', 'India', 'Italy', 'Australia', 'Australia', 4],
+
+    3: ["What is the capital city of Japan?", 'Seoul', 'Beijing', 'Tokyo', 'Bangkok', 'Tokyo', 3],
+
+    4: ["What is the smallest country in the world?", 'Monaco', 'Vatican City', 'San Marino', 'Liechtenstein', 'Vatican City', 2],
+
+    5: ["What is the longest river in the world?", 'Amazon', 'Nile', 'Yangtze', 'Mississippi', 'Nile', 2],
+
+    6: ["What is the tallest mountain in the world?", 'Mount Ruapehu', 'Kangchenjunga', 'Mount Everest', 'Lhotse', 'Mount Everest', 3],
+
+    7: ["Which country is known for the Taj Mahal?", 'India', 'Pakistan', 'Bangladesh', 'Nepal', 'India', 1],
+
+    8: ["What is the official language of Brazil?", 'Spanish', 'Portuguese', 'French', 'English', 'Portuguese', 2],
+
+    9: ["What is the capital of Canada?", 'Toronto', 'Ottawa', 'Vancouver', 'Montreal', 'Ottawa', 2],
+
+    10: ["Which country has the largest population?", 'India', 'USA', 'China', 'Russia', 'China', 3]
+
+}
+
+def ramdomer():
+    global qnum
+    qnum = ramdom.radint(1,10)
+    if qnum not in asked:
+        asked.append(qnum)
+    elif qnum in asked:
+        ramdomer()
 
 #_______ Creating main class
 class Main:
@@ -40,7 +80,7 @@ class Main:
         
 
         
-#start of Program       
+#start of Program~~~~~~~~~~~~~~~~~~~~~~~~~~~~     
 # Create object  
 if __name__ == "__main__":
         root = Tk()
