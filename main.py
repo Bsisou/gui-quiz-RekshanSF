@@ -4,7 +4,7 @@ os.system('pip install Pillow')
 # Import module  
 from tkinter import * 
 from PIL import Image, ImageTk
-import ramdom
+import random
 
 #list of names
 names = []
@@ -42,7 +42,7 @@ q_a = {
 
 def ramdomer():
     global qnum
-    qnum = ramdom.radint(1,10)
+    qnum = random.randint(1,10)
     if qnum not in asked:
         asked.append(qnum)
     elif qnum in asked:
@@ -55,7 +55,6 @@ class Main:
         # Frame Setup
         self.quiz_frame = Frame(parent, bg=bgcolor, padx=100, pady=100)
         self.quiz_frame.grid()
-
         
         # Label widget for heading
         self.heading_label = Label(self.quiz_frame, text="Welcome to \n Rekki's Global Mind Melt!",font=("impact", 30, "bold"), bg=bgcolor)
@@ -77,9 +76,95 @@ class Main:
         name = self.entry_box.get()
         names.append(name)
         self.quiz_frame.destroy()
+        Question(root)
+    
+
+#Question Page Class 
+
+class Question:
+    def __init__(self, parent):
+        bgcolor = "blue"
+        # Frame Setup
+        self.quiz_frame = Frame(parent, bg=bgcolor, padx=100, pady=100)
+        self.quiz_frame.grid()
+
+        ramdomer()
+        # Label widget for heading
+        self.question_label = Label(self.quiz_frame, text= q_a[qnum][0], font=("impact", 30, "bold"), bg=bgcolor)
+        self.question_label.grid(row=0, padx=10,pady=10)
+
+        #Holds the value of the radio button 
+        self.var1=IntVar()
+
+        #first radio button
+        self.rb1 = Radiobutton (self.quiz_frame,text=q_a[qnum][1], font= ("impact", 12), bg=bgcolor, value=1, variable=self.var1, pady=10, padx=10)
+        self.rb1.grid(row=1)
+
+        #2nd radio button
+        self.rb2 = Radiobutton (self.quiz_frame,text=q_a[qnum][2], font= ("impact", 12), bg=bgcolor, value=2, variable=self.var1, pady=10, padx=10)
+        self.rb2.grid(row=3)
+
+        #3rd radio button
+        self.rb3 = Radiobutton (self.quiz_frame,text=q_a[qnum][3], font= ("impact", 12), bg=bgcolor, value=3, variable=self.var1, pady=10, padx=10)
+        self.rb3.grid(row=5)
+
+        #4th radio button
+        self.rb4 = Radiobutton (self.quiz_frame,text=q_a[qnum][4], font= ("impact", 12), bg=bgcolor, value=4, variable=self.var1, pady=10, padx=10)
+        self.rb4.grid(row=7)
+
+        #confirm button
+        self.confirm = Button(self.quiz_frame, text="Confirm", bg="green", command=self.score_nextq)
+        self.confirm.grid(row=10)
+
+        #Score label 
+        self.score_label = Label(self.quiz_frame, text="Score", font=("impact", 20, "bold"), bg=bgcolor, pady=50, padx=20 )
+        self.score_label.grid(row=12)
         
 
+        #Next question code
+    def question_setup(self):
+        ramdomer()
+        self.var1.set(0)
+        self.question_label.config(text=q_a[qnum][0])
+        self.rb1.config(text=q_a[qnum][1])
+        self.rb2.config(text=q_a[qnum][2])
+        self.rb3.config(text=q_a[qnum][3])
+        self.rb4.config(text=q_a[qnum][4])
+
+        #to keep track of progress througout the quiz (score)
+
+    def score_nextq(self):
+        global score
+        scr_label = self.score_label
+        choice = self.var1.get()
+        if len(asked)>9: #checks if last question 
+            if choice == q_a[qnum][6]:
+                score +=1
+                scr_label.configure(text=score)
+                self.confirm.config(text="Confirm") #if correct (last question)
+            else: # if wrong (last question)
+                scr_label.configure(text="The Correct is : " + q_a[qnum][5])
+                self.confirm.config(text="Confirm")
+
+        else: #if not last question
+            if choice==0: #checks if user chose somthing
+                self.confirm.config(text="Please Select a answer")
+                choice=self.var1.get()
+            else: #if something is selected
+                if choice==q_a[qnum][6]: #if the user is correct
+                    score +=1
+                    scr_label.configure(text=score)
+                    self.confirm.config(text="Confirm")
+                    self.question_setup() #runs nect question
+
+                else: #if user is wrong
+                    scr_label.configure(text="The Correct is : " + q_a[qnum][5])
+                    self.confirm.config(text="Confirm")
+                
+            
         
+
+
 #start of Program~~~~~~~~~~~~~~~~~~~~~~~~~~~~     
 # Create object  
 if __name__ == "__main__":
