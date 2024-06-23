@@ -116,6 +116,7 @@ class Question:
         self.confirm = Button(self.quiz_frame, text="Confirm", bg="green", command=self.score_nextq)
         self.confirm.grid(row=10)
 
+
         #Score label 
         self.score_label = Label(self.quiz_frame, text="Score", font=("impact", 20, "bold"), bg=bgcolor, pady=50, padx=20 )
         self.score_label.grid(row=12)
@@ -123,51 +124,65 @@ class Question:
 
         #Next question code
     def question_setup(self):
-        ramdomer()
-        self.var1.set(0)
-        self.question_label.config(text=q_a[qnum][0])
-        self.rb1.config(text=q_a[qnum][1])
-        self.rb2.config(text=q_a[qnum][2])
-        self.rb3.config(text=q_a[qnum][3])
-        self.rb4.config(text=q_a[qnum][4])
+        if len(asked) < 10:
+            ramdomer()
+            self.var1.set(0)
+            self.question_label.config(text=q_a[qnum][0])
+            self.rb1.config(text=q_a[qnum][1])
+            self.rb2.config(text=q_a[qnum][2])
+            self.rb3.config(text=q_a[qnum][3])
+            self.rb4.config(text=q_a[qnum][4])
+        else : 
+            self.quiz_frame.destroy()
+            End(root)
+        
 
         #to keep track of progress througout the quiz (score)
 
     def score_nextq(self):
         global score
         scr_label = self.score_label
-        choice = self.var1.get()
-        if len(asked)>9: #checks if last question 
-            if choice == q_a[qnum][6]:
-                score +=1
-                scr_label.configure(text=score)
-                self.confirm.config(text="Confirm") #if correct (last question)
-            else: # if wrong (last question)
-                scr_label.configure(text="The Correct is : " + q_a[qnum][5])
-                self.confirm.config(text="Confirm")
+        choice = self.var1.get() #This collects the answer the user has chosen
 
-        else: #if not last question
-            if choice==0: #checks if user chose somthing
-                self.confirm.config(text="Please Select a answer")
-                choice=self.var1.get()
-            else: #if something is selected
-                if choice==q_a[qnum][6]: #if the user is correct
-                    score +=1
-                    scr_label.configure(text=score)
-                    self.confirm.config(text="Confirm")
-                    self.question_setup() #runs nect question
+        #this checks if the answer the user has chosen is correct
+        if choice == q_a[qnum][6]:
+            score += 1
+            scr_label.configure(text = f"Score: {score}") #This if stament shows what happends when the user gets the question correct, an f string is used for the score label to show the score
+        else:
+            scr_label.configure(text=f"The correct answer was: {q_a[qnum][5]}") #this else stament shows what happedns when the user gets the answer wrong, It configures the score label to show the correct answer
 
-                else: #if user is wrong
-                    scr_label.configure(text="The Correct is : " + q_a[qnum][5])
-                    self.confirm.config(text="Confirm")
+        if len(asked) >=10:
+            self.confirm.config(text="finish", command=self.end_quiz)
+        else:
+            self.question_setup()
+
+    def end_quiz(self):
+        self.quiz_frame.destroy()
+        End(root)
+
                 
             
         
 
+class End:
+    def __init__(self,parent): 
+        bgcolor = "blue"
+
+        #seting up the frame 
+        self.end_frame = Frame(parent, bg = bgcolor, padx=100,pady=100)
+        self.end_frame.grid()
+
+        #label to display score at the end 
+
+        self.end_label = Label(self.end_frame, text =f"Your final score is {score}", font= ("impact", 30, "bold"), bg=bgcolor)
+    
+        self.end_label.grid(row=0, padx=10, pady=10)
+        
 
 #start of Program~~~~~~~~~~~~~~~~~~~~~~~~~~~~     
 # Create object  
 if __name__ == "__main__":
+        score = 0
         root = Tk()
         root.title("Rekki's Global Mind Melt")
        
