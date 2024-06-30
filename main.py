@@ -9,7 +9,7 @@ import random
 # Dictionary of all my questions and answers
 q_a = {
     # index 0 is the question, index 1-4 are the answers, index 5 is the correct answer written again, index 6 is the correct answer index
-    1: ["What Flag is this ?", 'Nepal', 'Sri Lanka', 'China', 'South Korea', 'Sri Lanka', 2],
+    1: ["The Lion is the National Animal of what Country? ", 'Nepal', 'Sri Lanka', 'China', 'South Korea', 'Sri Lanka', 2],
     2: ["Kangaroos Are The National Animal Of What Country?", 'USA', 'India', 'Italy', 'Australia', 'Australia', 4],
     3: ["What is the capital city of Japan?", 'Seoul', 'Beijing', 'Tokyo', 'Bangkok', 'Tokyo', 3],
     4: ["What is the smallest country in the world?", 'Monaco', 'Vatican City', 'San Marino', 'Liechtenstein', 'Vatican City', 2],
