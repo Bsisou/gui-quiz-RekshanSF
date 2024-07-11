@@ -56,11 +56,20 @@ class Main:
         self.nextbutton = Button(self.quiz_frame, text="Start Quiz!", bg="limegreen", fg= "white",font=("impact", 20),relief="solid", bd=3, command=self.namecollect)
         self.nextbutton.pack(pady=60)
 
+    # this fuction is used to add the users name in the names list
     def namecollect(self):
         name = self.entry_box.get()
         self.names.append(name)
         self.quiz_frame.destroy()
         Question(root, self.names, self.asked, self.score)
+
+    # this fuction is used to reset all the varibles to their oringal states, This is activated only if the users wants to restart the quiz. This can be done by pressing the restart button at the end of the quiz
+    
+    def restart(self):
+        self.names = []
+        self.asked = []
+        self.score = 0
+        self.__init__(root)
 
 # Question Page Class 
 class Question:
@@ -182,7 +191,16 @@ class End:
         self.custommesage = self.custommesage()
         self.messagelabel = Label(self.end_frame, text=self.custommesage, font=("impact", 30, "bold"), bg=self.buttoncolor, fg=  self.textcolor, relief="solid", bd=3)
         self.messagelabel.pack(pady=40)
-    
+
+
+        #Button to restart the quiz 
+        self.restartbutton = Button(self.end_frame, text="Restart", bg="limegreen", fg= self.textcolor,font=("impact", 20),relief="solid", bd=3, command= self.restartquiz)
+        self.restartbutton.pack(pady=60)
+
+    def restartquiz(self):
+        self.end_frame.destroy()
+        main_object.restart()
+        
 
 #This fuction is for the custom message element of my quiz, This message is depentant on the score the user gets at the end of the quiz.
     
