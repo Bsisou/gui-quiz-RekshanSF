@@ -25,7 +25,10 @@ q_a ={
 # Main class
 class Main:
     def __init__(self, parent):
-        self.bgcolor = "blue"
+        self.bgcolor = "lightgrey"
+        self.textcolor = "white"
+        self.btextcolor = "black"
+        self.buttoncolor = "#f72585"
         self.names = []
         self.asked = []
         self.score = 0
@@ -36,20 +39,22 @@ class Main:
         self.quiz_frame.pack(expand=True, fill='both')
 
         # Label widget for heading
-        self.heading_label = Label(self.quiz_frame, text="Welcome to \n Rekki's Global Mind Melt!", font=("impact", 30, "bold"), bg=self.bgcolor)
-        self.heading_label.pack(pady=20)
+        self.heading_label = Label(self.quiz_frame, text="Welcome to \n Rekki's Global Mind Melt!", font=("impact", 30, "bold"), bg=self.buttoncolor, fg=self.textcolor,relief="solid", bd=3)
+        self.heading_label.pack(pady=40)
 
         # Label for enter your name text 
-        self.user_label = Label(self.quiz_frame, text="Enter Your Name Below", font=("impact", 20, "bold"), bg=self.bgcolor, pady=50, padx=20)
-        self.user_label.pack(pady=20)
+        self.user_label = Label(self.quiz_frame, text="Enter Your Name Below", font=("impact", 20, "bold"), bg=self.buttoncolor, fg=self.textcolor,relief="solid", bd=3)
+                                
+        self.user_label.pack(pady=40)
 
         # Entry box for name
-        self.entry_box = Entry(self.quiz_frame)
+        self.entry_box = Entry(self.quiz_frame, justify="center", font=("impact", 15, "bold"),relief="solid", bd=3)
+        
         self.entry_box.pack(pady=10)
 
         # Next button 
-        self.nextbutton = Button(self.quiz_frame, text="Next", bg="green", command=self.namecollect)
-        self.nextbutton.pack(pady=20)
+        self.nextbutton = Button(self.quiz_frame, text="Start Quiz!", bg="limegreen", fg= "white",font=("impact", 20),relief="solid", bd=3, command=self.namecollect)
+        self.nextbutton.pack(pady=60)
 
     def namecollect(self):
         name = self.entry_box.get()
@@ -60,7 +65,10 @@ class Main:
 # Question Page Class 
 class Question:
     def __init__(self, parent, names, asked, score):
-        self.bgcolor = "blue"
+        self.bgcolor = "lightgrey"
+        self.textcolor = "white"
+        self.btextcolor = "black"
+        self.buttoncolor = "#f72585"
         self.names = names
         self.asked = asked
         self.score = score
@@ -73,35 +81,43 @@ class Question:
         self.randomer()
 
         # Label widget for heading
-        self.question_label = Label(self.quiz_frame, text=q_a[self.qnum][0], font=("impact", 30, "bold"), bg=self.bgcolor)
-        self.question_label.pack(pady=20)
+        self.question_label = Label(self.quiz_frame, text=q_a[self.qnum][0], font=("impact", 30, "bold"), bg=self.buttoncolor, fg=self.textcolor, relief="solid", bd=5,)
+        
+        self.question_label.pack(pady=30)
 
 
         # Holds the value of the radio button 
         self.var1 = IntVar()
 
         # First radio button
-        self.rb1 = Radiobutton(self.quiz_frame, text=q_a[self.qnum][1], font=("impact", 12), bg=self.bgcolor, value=1, variable=self.var1, pady=10, padx=10)
+        self.rb1 = Radiobutton(self.quiz_frame, text=q_a[self.qnum][1], font=("impact", 12), bg=self.buttoncolor,fg=self.btextcolor, relief="solid", bd=3, value=1, variable=self.var1, pady=10, padx=10)
+        
         self.rb1.pack(pady=10)
 
         # Second radio button
-        self.rb2 = Radiobutton(self.quiz_frame, text=q_a[self.qnum][2], font=("impact", 12), bg=self.bgcolor, value=2, variable=self.var1, pady=10, padx=10)
+        self.rb2 = Radiobutton(self.quiz_frame, text=q_a[self.qnum][2], font=("impact", 12), bg=self.buttoncolor, fg=self.btextcolor,relief="solid", bd=3, value=2, variable=self.var1, pady=10, padx=10)
+        
         self.rb2.pack(pady=10)
 
         # Third radio button
-        self.rb3 = Radiobutton(self.quiz_frame, text=q_a[self.qnum][3], font=("impact", 12), bg=self.bgcolor, value=3, variable=self.var1, pady=10, padx=10)
+        self.rb3 = Radiobutton(self.quiz_frame, text=q_a[self.qnum][3], font=("impact", 12), bg=self.buttoncolor, fg= self.btextcolor,relief="solid", bd=3, value=3, variable=self.var1, pady=10, padx=10)
+        
         self.rb3.pack(pady=10)
 
         # Fourth radio button
-        self.rb4 = Radiobutton(self.quiz_frame, text=q_a[self.qnum][4], font=("impact", 12), bg=self.bgcolor, value=4, variable=self.var1, pady=10, padx=10)
+        self.rb4 = Radiobutton(self.quiz_frame, text=q_a[self.qnum][4], font=("impact", 12), bg=self.buttoncolor, fg= self.btextcolor,relief="solid", bd=3, value=4, variable=self.var1, pady=10, padx=10)
+        
         self.rb4.pack(pady=10)
 
+        
         # Confirm button
-        self.confirm = Button(self.quiz_frame, text="Confirm", bg="green", command=self.score_nextq)
-        self.confirm.pack(pady=10)
+        self.confirm = Button(self.quiz_frame, text="Confirm", bg="limegreen", fg= self.textcolor,font=("impact", 22), relief="solid", bd=3, command=self.score_nextq)
+        
+        self.confirm.pack(pady=25)
 
         # Score label 
-        self.score_label = Label(self.quiz_frame, text="Score", font=("impact", 20, "bold"), bg=self.bgcolor, pady=50, padx=20)
+        self.score_label = Label(self.quiz_frame, text="Score", font=("impact", 15, "bold"), bg="dodgerblue", fg=self.textcolor, relief="solid", bd=3)
+        
         self.score_label.pack(pady=10)
 
     def randomer(self):
@@ -142,9 +158,15 @@ class Question:
         self.quiz_frame.destroy()
         End(root, self.score, self.names[0])
 
+
+#Class for my End Page 
 class End:
     def __init__(self, parent, score, name): 
-        self.bgcolor = "blue"
+        self.bgcolor = "lightgrey"
+        self.textcolor = "white"
+        self.btextcolor = "black"
+        self.buttoncolor = "#f72585"
+        
         self.score = score
         self.name = name
 
@@ -153,20 +175,27 @@ class End:
         self.end_frame.pack(expand=True, fill='both')
 
         # Label to display score at the end 
-        self.end_label = Label(self.end_frame, text=f"Your final score is {self.score}", font=("impact", 30, "bold"), bg=self.bgcolor)
-        self.end_label.pack(pady=20)
+        self.end_label = Label(self.end_frame, text=f"Your final score is {self.score}", font=("impact", 30, "bold"), bg=self.buttoncolor, fg=self.textcolor, relief="solid", bd=3)
+        self.end_label.pack(pady=80)
 
         #Label to display the costom message at the end of the quiz 
         self.custommesage = self.custommesage()
-        self.messagelabel = Label(self.end_frame, text=self.custommesage, font=("impact", 30, "bold"), bg=self.bgcolor)
-        self.messagelabel.pack(pady=20)
+        self.messagelabel = Label(self.end_frame, text=self.custommesage, font=("impact", 30, "bold"), bg=self.buttoncolor, fg=  self.textcolor, relief="solid", bd=3)
+        self.messagelabel.pack(pady=40)
     
 
 #This fuction is for the custom message element of my quiz, This message is depentant on the score the user gets at the end of the quiz.
     
     def custommesage(self): 
         if self.score == 10:
-            return f"congrats {self.name}, You have Earned the Title of Global Genius!"
+            return f"Congrats {self.name}, You have Earned the Title of Global Genius!"
+
+        elif self.score >= 7: 
+            return f"Great Job {self.name},\n You are quite a Global Geek!"
+
+        elif self.score >= 4:
+            return f"Good One {self.name},\n I guess you know a bit about\n this circle we called Earth"
+        
         else: 
             return f"Keep Trying {self.name},\nYou Still Have Lots to Learn"
     
