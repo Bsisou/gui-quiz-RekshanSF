@@ -70,7 +70,7 @@ class Main:
         name = self.entry_box.get()
 
         if not name.isalpha(): #This checks if the characters enetered are letters only 
-            self.errorlabel.config(text="Name Must Only Contain Letters")
+            self.errorlabel.config(text="Please Enter A Name That Only Contain Letters")
 
         #This makes sure that the name entered is greater than 2 characters 
         elif len(name) < 2: 
@@ -153,6 +153,9 @@ class Question:
         
         self.score_label.pack(pady=10)
 
+
+    #This is my ramdomizer fuction which makes sure questions are given in ramdom order each time the user plays the quiz
+    
     def randomer(self):
 
         #this varible contains all questions from the dictionary that is not yet asked 
@@ -167,6 +170,9 @@ class Question:
         else:
             self.qnum = None     #after all questions have been asked 
 
+
+    #This is my next question fuction, it works by changing the lables on the question poage every new question. This is makes the quiz code robust as instead of using mutiple classes for every question we are just using one and chnaging it saving time and reasources. 
+    
     def question_setup(self):
         if len(self.asked) < 10:
             self.randomer()
@@ -178,10 +184,11 @@ class Question:
             self.rb4.config(text=Main.q_a[self.qnum][4])
         else:
             self.quiz_frame.destroy()
-            End(root, self.score, self.names[0])
+            End(root, self.score, self.names[0]) #opens the end page after all questions have been asked 
 
     def score_nextq(self):
         choice = self.var1.get()  # This collects the answer the user has chosen
+        
         # This checks if the answer the user has chosen is correct
         if choice == Main.q_a[self.qnum][6]:
             self.score += 1
@@ -189,11 +196,15 @@ class Question:
         else:
             self.score_label.configure(text=f"The correct answer was: {Main.q_a[self.qnum][5]}")  # This else statement shows what happens when the user gets the answer wrong, It configures the score label to show the correct answer
 
+
+        #after the last question the confirm button turns into a finish button
         if len(self.asked) >= 10:
             self.confirm.config(text="Finish", command=self.end_quiz)
         else:
             self.question_setup()
 
+
+    #this fuction is responsible for destroying the question page and opening the end page
     def end_quiz(self):
         self.quiz_frame.destroy()
         End(root, self.score, self.names[0])
@@ -218,7 +229,7 @@ class End:
         self.end_label = Label(self.end_frame, text=f"Your final score is {self.score}", font=("impact", 30, "bold"), bg=self.buttoncolor, fg=self.textcolor, relief="solid", bd=3)
         self.end_label.pack(pady=80)
 
-        #Label to display the costom message at the end of the quiz 
+        #Label to display the custom message at the end of the quiz 
         self.custommesage = self.custommesage()
         self.messagelabel = Label(self.end_frame, text=self.custommesage, font=("impact", 30, "bold"), bg=self.buttoncolor, fg=  self.textcolor, relief="solid", bd=3)
         self.messagelabel.pack(pady=40)
@@ -234,17 +245,21 @@ class End:
         
 
 #This fuction is for the custom message element of my quiz, This message is depentant on the score the user gets at the end of the quiz.
-    
+
+
+    #message if user gets 10 points
     def custommesage(self): 
         if self.score == 10:
-            return f"Congrats {self.name}, You have Earned the Title of Global Genius!"
+            return f"Congrats {self.name},\n You have Earned\n the Title of Global Genius!"
 
+    #message if user gets 7-9 points
         elif self.score >= 7: 
             return f"Great Job {self.name},\n You are quite a Global Geek!"
-
+    #message if user gets 4 - 6 points
         elif self.score >= 4:
             return f"Good One {self.name},\n I guess you know a bit about\n this circle we called Earth"
-        
+
+    #message if user gets less than 4 points 
         else: 
             return f"Keep Trying {self.name},\nYou Still Have Lots to Learn"
     
