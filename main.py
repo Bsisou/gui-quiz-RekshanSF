@@ -56,12 +56,34 @@ class Main:
         self.nextbutton = Button(self.quiz_frame, text="Start Quiz!", bg="limegreen", fg= "white",font=("impact", 20),relief="solid", bd=3, command=self.namecollect)
         self.nextbutton.pack(pady=60)
 
+        #Label to show the error message
+        self.errorlabel =  Label(self.quiz_frame, text="", font=("impact", 15, "bold"), bg=self.bgcolor, fg="red")
+
+        self.errorlabel.pack(pady=10)
+    
     # this fuction is used to add the users name in the names list
+    # This fuction is also used to check if the name entered is accepcted into the boudary.
+    
     def namecollect(self):
         name = self.entry_box.get()
-        self.names.append(name)
-        self.quiz_frame.destroy()
-        Question(root, self.names, self.asked, self.score)
+
+        if not name.isalpha(): #This checks if the characters enetered are letters only 
+            self.errorlabel.config(text="Name Must Only Contain Letters")
+
+        #This makes sure that the name entered is greater than 2 characters 
+        elif len(name) < 2: 
+            self.errorlabel.config(text="Name must be at least 2 characters")
+
+        #This makes sure that the name entered is not greater than 10 characters.
+        elif len(name) > 10: 
+             self.errorlabel.config(text="Name must be 10 characters or less")
+            
+        #if the name is acceptable then it is added into the name list and starts the quiz with the question page.
+        else: 
+            self.names.append(name)
+            self.quiz_frame.destroy()
+            Question(root, self.names, self.asked, self.score)
+        
 
     # this fuction is used to reset all the varibles to their oringal states, This is activated only if the users wants to restart the quiz. This can be done by pressing the restart button at the end of the quiz
     
